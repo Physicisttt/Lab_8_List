@@ -174,6 +174,7 @@ public:
             else
             {
                 //throw std::string("InsertAfterAssigned: there is no assigned position in the list!");
+                return;
             }
         }
     }    
@@ -235,6 +236,7 @@ public:
             else
             {
                 //throw std::string("InsertAfterAssigned: there is no assigned position in the list!");
+                return;
             }
         }
     }
@@ -283,6 +285,79 @@ public:
         // after while(), "previous" contains pre-last element and "current" contains last element
         previous->pos_next = nullptr;
         return;
+    }
+
+    void DeleteAssigned(Cell* assignedpos)
+    {
+        // empty list
+        if (header == nullptr)
+        {
+            //throw exeption?
+            return;
+        }
+
+        //list contains only one element
+        if (header->Next() == nullptr)
+        {
+            if (header == assignedpos)
+            {
+                DeleteFirst();
+                return;
+            }
+
+            return;
+        }
+
+        //list contains only two elements
+        Cell* previous = header;
+        Cell* current = header->Next();
+        if (current->Next() == nullptr)
+        {
+            if (previous == assignedpos)//checking the first element
+            {
+                DeleteFirst();
+                return;
+            }
+
+            if (current == assignedpos)//checking the last element
+            {
+                DeleteLast();
+                return;
+            }
+
+            return;
+        }
+
+        // list contains more than two elements
+        previous = header;
+        current = header->Next();
+
+        if (header == assignedpos)//checking the first element
+        {
+            DeleteFirst();
+            return;
+        }
+
+        while (current->Next() != nullptr) //checking other elements (except the last)
+        {
+            if (current == assignedpos)
+            {
+                previous->pos_next = current->Next();
+                return;
+            }
+
+            previous = current;
+            current = current->Next();
+        }
+
+        if (current == assignedpos)// checking the last element
+        {
+            //DeleteLast();//no need to go through list again, because after while() cycle we alredy have needed elements
+            previous->pos_next = nullptr;
+            return;
+        }
+
+        return;//assigned element doesn't exist in the list
     }
 
     void Print()
@@ -443,7 +518,7 @@ int main(void)
 
 ////////////////////////////DeleteFirst test/////////////////////////////////////////////
 
-
+/*
     std::cout << "  DeleteFirst test" << std::endl;
 
     MyList L5;
@@ -489,11 +564,11 @@ int main(void)
     std::cout << L5;
     L5.DeleteFirst();//a lot of elements
     std::cout << L5;
-
+*/
 
 ////////////////////////////DeleteLast test//////////////////////////////////////////////
 
-
+/*
     std::cout << "  DeleteLast test" << std::endl;
     MyList L6;
 
@@ -539,8 +614,64 @@ int main(void)
     L6.DeleteLast();//a lot of elements
     std::cout << L6;
 
+*/
 
 
+////////////////////////////DeleteAssigned test//////////////////////////////////////////
+
+    std::cout << "  DeleteAssigned test" << std::endl;
+    MyList L7;
+
+    /*
+        std::cout << L7;
+        L7.DeleteAssigned(NewCell_1);//deleting in empty list
+        std::cout << L7;
+    */
+
+/*
+    L7.InsertToEnd(NewCell_1);
+    std::cout << L7;
+    L7.DeleteAssigned(NewCell_2);//one element, deleting the missing element inside of list
+    std::cout << L7;
+    L7.DeleteAssigned(NewCell_1);//one element, deleting existing element inside of list
+    std::cout << L7;
+
+    L7.InsertToEnd(NewCell_1);
+    L7.InsertToEnd(NewCell_2);
+    std::cout << L7;
+
+    L7.DeleteAssigned(NewCell_3);//two elements, deleting the missing element inside of list
+    std::cout << L7;
+
+    //L7.DeleteAssigned(NewCell_1);//two elements, deleting the first element inside of list
+    L7.DeleteAssigned(NewCell_2);//two elements, deleting the second element inside of list
+    std::cout << L7;
+
+*/
+
+    L7.InsertToEnd(NewCell_1);//4
+    L7.InsertToEnd(NewCell_2);//7
+    L7.InsertToEnd(NewCell_3);//9
+    L7.InsertToEnd(NewCell_4);//12
+    L7.InsertToEnd(NewCell_5);//25
+    std::cout << L7;
+
+
+
+    //L7.DeleteAssigned(NewCell_1);//many elements, deleting the first
+    //std::cout << L7;
+
+    //L7.DeleteAssigned(NewCell_2);//many elements, deleting the second
+    //std::cout << L7;
+
+    //L7.DeleteAssigned(NewCell_6);//many elements, deleting the last
+    //std::cout << L7;
+
+    //L7.DeleteAssigned(NewCell_4);//many elements, deleting non-edge element
+    //std::cout << L7;
+
+    L7.DeleteAssigned(NewCell_6);//many elements, deleting the missing element
+    std::cout << L7;
 
     return 0;
 }
