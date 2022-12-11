@@ -239,6 +239,52 @@ public:
         }
     }
 
+    void DeleteFirst()
+    {
+        //first case: empty list
+        if (header == nullptr)
+        {
+            //throw std::string("DeleteLast: list is empty!");
+            return;
+        }
+
+        //second case: list is not empty
+        header = header->Next();
+        return;
+
+    }
+
+    void DeleteLast()
+    {
+        //first case: empty list
+        if (header == nullptr)
+        {
+            //throw std::string("DeleteLast: list is empty!");
+            return;
+        }
+
+        //second case: list contains only one element
+        if (header->Next() == nullptr)
+        {
+            header = nullptr;
+            return;
+        }
+
+        //third case: list contains more than one element
+        Cell* previous = header;
+        Cell* current = header->Next();
+
+        while (current->Next() != nullptr)//getting pre-last element
+        {
+            previous = current;
+            current = current->Next();
+        }
+
+        // after while(), "previous" contains pre-last element and "current" contains last element
+        previous->pos_next = nullptr;
+        return;
+    }
+
     void Print()
     {
         if (header != nullptr)
@@ -372,7 +418,7 @@ int main(void)
 
 //////////////////////////insert before assigned position////////////////////////////////
 
-
+/*
     std::cout << "  insert before assigned position test" << std::endl;
 
     MyList L3;
@@ -392,6 +438,106 @@ int main(void)
     L3.InsertBeforeAssigned(NewCell_6, NewCell_1);//insert before first element
 
     std::cout << L3;
+
+*/
+
+////////////////////////////DeleteFirst test/////////////////////////////////////////////
+
+
+    std::cout << "  DeleteFirst test" << std::endl;
+
+    MyList L5;
+
+    std::cout << L5;
+    L5.DeleteFirst();//empty
+    std::cout << L5;
+
+
+
+    L5.InsertToEnd(NewCell_1);//4
+
+    L5.DeleteFirst();//one element
+    std::cout << L5;
+
+
+
+    L5.InsertToEnd(NewCell_1);//4
+    L5.InsertToEnd(NewCell_2);//7
+
+    std::cout << L5;
+    L5.DeleteFirst();//two elements
+    std::cout << L5;
+
+
+
+    L5.InsertToEnd(NewCell_1);//4
+    L5.InsertToEnd(NewCell_2);//7
+    L5.InsertToEnd(NewCell_3);//9
+
+    std::cout << L5;
+    L5.DeleteFirst();//three elements
+    std::cout << L5;
+
+
+
+    L5.InsertToEnd(NewCell_1);//4
+    L5.InsertToEnd(NewCell_2);//7
+    L5.InsertToEnd(NewCell_3);//9
+    L5.InsertToEnd(NewCell_4);//12
+    L5.InsertToEnd(NewCell_5);//25
+
+    std::cout << L5;
+    L5.DeleteFirst();//a lot of elements
+    std::cout << L5;
+
+
+////////////////////////////DeleteLast test//////////////////////////////////////////////
+
+
+    std::cout << "  DeleteLast test" << std::endl;
+    MyList L6;
+
+
+    std::cout << L6;
+    L6.DeleteLast();//empty
+    std::cout << L6;
+
+
+
+    L6.InsertToEnd(NewCell_1);//4
+    std::cout << L6;
+    L6.DeleteLast();//one element
+    std::cout << L6;
+
+
+
+    L6.InsertToEnd(NewCell_1);//4
+    L6.InsertToEnd(NewCell_2);//7
+    std::cout << L6;
+    L6.DeleteLast();//two elements
+    std::cout << L6;
+
+
+
+    L6.InsertToEnd(NewCell_1);//4
+    L6.InsertToEnd(NewCell_2);//7
+    L6.InsertToEnd(NewCell_3);//9
+
+    std::cout << L6;
+    L6.DeleteLast();//three elements
+    std::cout << L6;
+
+
+
+    L6.InsertToEnd(NewCell_1);//4
+    L6.InsertToEnd(NewCell_2);//7
+    L6.InsertToEnd(NewCell_3);//9
+    L6.InsertToEnd(NewCell_4);//12
+    L6.InsertToEnd(NewCell_5);//25
+
+    std::cout << L6;
+    L6.DeleteLast();//a lot of elements
+    std::cout << L6;
 
 
 
