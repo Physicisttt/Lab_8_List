@@ -62,6 +62,45 @@ public:
         
     }
 
+    Cell* GetNext(Cell* assignedpos)
+    {
+        if (assignedpos != nullptr)
+        {
+            if (Search(assignedpos) != nullptr)
+            {
+                return assignedpos->pos_next;
+            }
+        }
+
+        return nullptr;
+    }
+
+    Cell* Search(Cell* elem)
+    {
+        if (elem != nullptr)
+        {
+            if (header == nullptr)
+            {
+                return nullptr;
+            }
+
+            Cell* current = header;
+            while (current != nullptr)
+            {
+                if (current == elem)
+                {
+                    return current;
+                }
+
+                current = current->Next();
+            }
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+
     int GetLength()
     {
         if (header == nullptr)
@@ -672,6 +711,50 @@ int main(void)
 
     L7.DeleteAssigned(NewCell_6);//many elements, deleting the missing element
     std::cout << L7;
+
+//////////////////////////////GetNext test///////////////////////////////////////
+
+    Cell* NextCell = new Cell;
+
+    NextCell = L7.GetNext(NewCell_3);
+    //NextCell = L7.GetNext(nullptr);
+
+    if (NextCell != nullptr)
+    {
+        std::cout << NextCell->val;
+    }
+    else
+    {
+        std::cout << "NexCell constains nullptr" << std::endl;
+    }
+    
+
+///////////////////////////GetNext and Search test//////////////////////////////////////////
+
+    MyList A;
+    MyList B;
+
+    A.InsertToEnd(NewCell_1);
+    A.InsertToEnd(NewCell_2);
+
+    B.InsertToEnd(NewCell_3);
+    B.InsertToEnd(NewCell_4);
+
+    Cell* ttt = A.Search(NewCell_1);//getting first element from list A
+    Cell* tttnnn = A.GetNext(ttt);//getting next element after assigned from list A
+
+    std::cout << "List A; Next element after " << ttt->val << " is " << tttnnn->val << std::endl;
+
+    Cell* qqq = B.GetNext(ttt);//getting next element after assigned but from list B
+
+    if (qqq == nullptr)
+    {
+        std::cout << "element " << ttt->val << " not found in list B!" << std::endl;
+    }
+
+    
+
+
 
     return 0;
 }
