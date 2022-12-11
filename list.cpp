@@ -56,7 +56,7 @@ public:
         }
         else
         {
-            std::cout << "nullptr returned!" << std::endl;
+            //std::cout << "nullptr returned!" << std::endl;
             return nullptr;
         }
         
@@ -69,6 +69,43 @@ public:
             if (Search(assignedpos) != nullptr)
             {
                 return assignedpos->pos_next;
+            }
+        }
+
+        return nullptr;
+    }
+
+    Cell* GetPrev(Cell* assignedpos)
+    {
+        if (assignedpos != nullptr)
+        {
+            if (Search(assignedpos) != nullptr)
+            {
+                //empty list
+                if (header == nullptr)
+                {
+                    return nullptr;
+                }
+
+                //list of only one element
+                if (header->Next() == nullptr)
+                {
+                    return nullptr;
+                }
+
+                //list of at least two elements
+                Cell* previous = header;
+                Cell* current = header->Next();
+                while (current != nullptr)
+                {
+                    if (current == assignedpos)
+                    {
+                        return previous;
+                    }
+
+                    previous = current;
+                    current = current->Next();
+                }
             }
         }
 
@@ -99,6 +136,18 @@ public:
         {
             return nullptr;
         }
+
+        return nullptr;
+    }
+
+    bool IsEmpty()
+    {
+        if (header == nullptr)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     int GetLength()
@@ -397,6 +446,33 @@ public:
         }
 
         return;//assigned element doesn't exist in the list
+    }
+
+    Cell* PopFront()
+    {
+        if (header == nullptr)
+        {
+            return nullptr;
+        }
+
+        Cell* temp;
+        temp = header;
+        DeleteFirst();
+
+        return temp;
+    }
+
+    Cell* PopBack()
+    {
+        if (header == nullptr)
+        {
+            return nullptr;
+        }
+
+        Cell* temp;
+        temp = GetLast();
+        DeleteLast();
+        return temp;
     }
 
     void Print()
@@ -714,6 +790,7 @@ int main(void)
 
 //////////////////////////////GetNext test///////////////////////////////////////
 
+/*
     Cell* NextCell = new Cell;
 
     NextCell = L7.GetNext(NewCell_3);
@@ -727,10 +804,19 @@ int main(void)
     {
         std::cout << "NexCell constains nullptr" << std::endl;
     }
-    
+
+    MyList L8;
+
+    //L8.InsertToEnd(NewCell_1);
+
+    Cell* rrrr;
+    rrrr = L8.GetNext(NewCell_1);
+
+*/
 
 ///////////////////////////GetNext and Search test//////////////////////////////////////////
 
+/*
     MyList A;
     MyList B;
 
@@ -752,7 +838,82 @@ int main(void)
         std::cout << "element " << ttt->val << " not found in list B!" << std::endl;
     }
 
+ */
+
+//////////////////////////////GetPrev test//////////////////////////////////////////////
     
+    std::cout << std::endl << std::endl;
+    std::cout << L7;
+
+    Cell* qwerty = L7.GetPrev(NewCell_3);
+    std::cout << "GetPrev: " << qwerty->val << std::endl;
+
+    MyList L9;
+
+    qwerty = L9.GetPrev(NewCell_1);//zero
+
+    L9.InsertToEnd(NewCell_1);//one
+
+    //qwerty = L9.GetPrev(NewCell_1);
+    //qwerty = L9.GetPrev(NewCell_2);
+
+
+    L9.InsertToEnd(NewCell_2);//two
+
+    //qwerty = L9.GetPrev(NewCell_1);
+    //qwerty = L9.GetPrev(NewCell_2);
+    //qwerty = L9.GetPrev(NewCell_3);
+
+    L9.InsertToEnd(NewCell_3);
+    L9.InsertToEnd(NewCell_4);
+    L9.InsertToEnd(NewCell_5);
+
+    //qwerty = L9.GetPrev(NewCell_1);
+    //qwerty = L9.GetPrev(NewCell_2);
+    //qwerty = L9.GetPrev(NewCell_3);
+    //qwerty = L9.GetPrev(NewCell_4);
+    //qwerty = L9.GetPrev(NewCell_5);
+    //qwerty = L9.GetPrev(NewCell_6);
+
+/////////////////////////////////////////////////////////////
+
+    std::cout << "  PopFront test" << std::endl;
+
+    std::cout << L9;
+
+    Cell* temp = nullptr;
+    int i = 0;
+    while (L9.GetFirst() != nullptr)
+    {
+        temp = L9.PopFront();
+        std::cout << "popfront: #" << i << " = " << temp->val << std::endl;
+        i++;
+    }
+
+    std::cout << L9;
+
+////////////////////////////////////////////////////////////////
+
+    std::cout << "  PopBack test" << std::endl;
+
+    L9.InsertToEnd(NewCell_1);
+    L9.InsertToEnd(NewCell_2);
+    L9.InsertToEnd(NewCell_3);
+    L9.InsertToEnd(NewCell_4);
+    L9.InsertToEnd(NewCell_5);
+
+    std::cout << L9;
+
+    temp = nullptr;
+    i = 0;
+    while (L9.GetLast() != nullptr)
+    {
+        temp = L9.PopBack();
+        std::cout << "popback: #" << i << " = " << temp->val << std::endl;
+        i++;
+    }
+
+    std::cout << L9;
 
 
 
