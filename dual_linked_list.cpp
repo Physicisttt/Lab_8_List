@@ -1,9 +1,10 @@
 #include <iostream>
 
+template <class Type>
 class Cell
 {
 public:
-    int val = 0;
+    Type val = 0;
 
     Cell* Next() const
     {
@@ -19,41 +20,31 @@ private:
     Cell* pos_next = nullptr;
     Cell* pos_prev = nullptr;
 
-
-    //methods?
-
-    //insert
-    //locate
-    //retrieve
-    //delete
-    //next 
-    //previous
-
-    //end(MyDualList L)
-    //makenull(MyDualList L)
-
-    friend class MyDualList;
+     template<class Type>
+     friend class MyDualList;
 };
 
+template<class Type>
 class MyDualList
 {
+    typedef Cell<Type> CELLT;
 private:
-    Cell* header = nullptr;
-    Cell* footer = nullptr;
+    CELLT* header = nullptr;
+    CELLT* footer = nullptr;
 
 public:
 
-    Cell* GetFirst()
+    CELLT* GetFirst()
     {
         return header;
     }
 
-    Cell* GetLast()
+    CELLT* GetLast()
     {
         return footer;
     }
 
-    Cell* GetNext(Cell* assignedpos)
+    CELLT* GetNext(CELLT* assignedpos)
     {
         if (assignedpos != nullptr)
         {
@@ -66,7 +57,7 @@ public:
         return nullptr;
     }
 
-    Cell* GetPrev(Cell* assignedpos)
+    CELLT* GetPrev(CELLT* assignedpos)
     {
 
         if (assignedpos != nullptr)
@@ -81,7 +72,7 @@ public:
 
     }
 
-    Cell* Search(Cell* elem)
+    CELLT* Search(CELLT* elem)
     {
         if (elem != nullptr)
         {
@@ -90,7 +81,7 @@ public:
                 return nullptr;
             }
 
-            Cell* current = header;
+            CELLT* current = header;
             while (current != nullptr)
             {
                 if (current == elem)
@@ -127,7 +118,7 @@ public:
         }
         else
         {
-            Cell* current = header;
+            CELLT* current = header;
             int i = 0;
             while (current->Next() != nullptr)
             {
@@ -139,10 +130,10 @@ public:
         }
     }
 
-    void InsertToEnd(Cell* elem)
+    void InsertToEnd(CELLT* elem)
     {
-        Cell* A = footer;
-        Cell* B = elem;
+        CELLT* A = footer;
+        CELLT* B = elem;
 
         if (header == nullptr)//insert to end in empty list
         {
@@ -160,10 +151,10 @@ public:
         }
     }
 
-    void InsertToBegin(Cell* elem)
+    void InsertToBegin(CELLT* elem)
     {
-        Cell* A = header;
-        Cell* B = elem;
+        CELLT* A = header;
+        CELLT* B = elem;
 
         if (header == nullptr)//insert to begin in empty list
         {
@@ -181,23 +172,23 @@ public:
         }
     }
 
-    Cell* InsertToEnd(int value)
+    CELLT* InsertToEnd(int value)
     {
-        Cell* temp = new Cell;
+        CELLT* temp = new CELLT;
         temp->val = value;
         InsertToEnd(temp);
         return temp;
     }
 
-    Cell* InsertToBegin(int value)
+    CELLT* InsertToBegin(int value)
     {
-        Cell* temp = new Cell;
+        CELLT* temp = new CELLT;
         temp->val = value;
         InsertToBegin(temp);
         return temp;
     }
 
-    void InsertAfterAssigned(Cell* elem, Cell* assignedpos)//????????????
+    void InsertAfterAssigned(CELLT* elem, CELLT* assignedpos)//????????????
     {
         if ((assignedpos == nullptr) || (elem == nullptr))
         {
@@ -212,9 +203,9 @@ public:
         }
         else//insert to non-empty list
         {
-            Cell* B = assignedpos;
-            Cell* C = assignedpos->Next();
-            Cell* D = elem;
+            CELLT* B = assignedpos;
+            CELLT* C = assignedpos->Next();
+            CELLT* D = elem;
 
             if (B == footer)
             {
@@ -229,7 +220,7 @@ public:
         }
     }
 
-    void InsertBeforeAssigned(Cell* elem, Cell* assignedpos)//realisation in one-way list (from begin to end)
+    void InsertBeforeAssigned(CELLT* elem, CELLT* assignedpos)//realisation in one-way list (from begin to end)
     {
         if ((assignedpos == nullptr) || (elem == nullptr))
         {
@@ -244,9 +235,9 @@ public:
         }
         else//insert to non-empty list
         {
-            Cell* B = assignedpos;
-            Cell* A = assignedpos->Prev();
-            Cell* D = elem;
+            CELLT* B = assignedpos;
+            CELLT* A = assignedpos->Prev();
+            CELLT* D = elem;
 
             if (B == header)
             {
@@ -303,12 +294,12 @@ public:
             return;
         }
 
-        Cell* A = footer->pos_prev;
+        CELLT* A = footer->pos_prev;
         footer = A;
         A->pos_next = nullptr;
     }
 
-    void DeleteAssigned(Cell* assignedpos)
+    void DeleteAssigned(CELLT* assignedpos)
     {
         // empty list
         if (header == nullptr)
@@ -317,9 +308,9 @@ public:
             return;
         }
 
-        Cell* B = assignedpos;
-        Cell* A = B->Prev();
-        Cell* C = B->Next();
+        CELLT* B = assignedpos;
+        CELLT* A = B->Prev();
+        CELLT* C = B->Next();
 
         if (B == header)
         {
@@ -338,28 +329,28 @@ public:
 
     }
 
-    Cell* PopFront()
+    CELLT* PopFront()
     {
         if (header == nullptr)
         {
             return nullptr;
         }
 
-        Cell* temp;
+        CELLT* temp;
         temp = GetFirst();
         DeleteFirst();
 
         return temp;
     }
 
-    Cell* PopBack()
+    CELLT* PopBack()
     {
         if (header == nullptr)
         {
             return nullptr;
         }
 
-        Cell* temp;
+        CELLT* temp;
         temp = GetLast();
         DeleteLast();
         return temp;
@@ -369,7 +360,7 @@ public:
     {
         if (header != nullptr)
         {
-            Cell* current = header;
+            CELLT* current = header;
 
             int i = 0;
             while (current->Next() != nullptr)
@@ -403,31 +394,31 @@ public:
 
 int dual_linked_main(void)
 {
-    Cell* NewCell_1 = new Cell;
+    Cell<int>* NewCell_1 = new Cell<int>;
     NewCell_1->val = 4;
 
-    Cell* NewCell_2 = new Cell;
+    Cell<int>* NewCell_2 = new Cell<int>;
     NewCell_2->val = 7;
 
-    Cell* NewCell_3 = new Cell;
+    Cell<int>* NewCell_3 = new Cell<int>;
     NewCell_3->val = 9;
 
-    Cell* NewCell_4 = new Cell;
+    Cell<int>* NewCell_4 = new Cell<int>;
     NewCell_4->val = 12;
 
-    Cell* NewCell_5 = new Cell;
+    Cell<int>* NewCell_5 = new Cell<int>;
     NewCell_5->val = 25;
 
-    Cell* NewCell_6 = new Cell;
+    Cell<int>* NewCell_6 = new Cell<int>;
     NewCell_6->val = 66;
 
-    Cell* NewCell_7 = new Cell;
+    Cell<int>* NewCell_7 = new Cell<int>;
     NewCell_7->val = 77;
 
-    Cell* NewCell_8 = new Cell;
+    Cell<int>* NewCell_8 = new Cell<int>;
     NewCell_8->val = 88;
 
-    Cell* NewCell_9 = new Cell;
+    Cell<int>* NewCell_9 = new Cell<int>;
     NewCell_9->val = 99;
 
 
@@ -458,7 +449,7 @@ int dual_linked_main(void)
     ///////////////////////////insert to end/////////////////////////////////////////////////
 
     {
-        MyDualList L1;
+        MyDualList<int> L1;
 
         L1.InsertToEnd(NewCell_1);
 
@@ -474,7 +465,7 @@ int dual_linked_main(void)
     //////////////////////////insert to begin////////////////////////////////////////////////
 
     {
-        MyDualList L2;
+        MyDualList<int> L2;
 
         L2.InsertToBegin(NewCell_1);//4
 
@@ -493,10 +484,10 @@ int dual_linked_main(void)
     std::cout << "  insert after assigned position test" << std::endl;
 
     {
-        MyDualList L3;
-        Cell* c1 = L3.InsertToEnd(11);
-        Cell* c2 = L3.InsertToEnd(22);
-        Cell* c3 = L3.InsertToEnd(33);
+        MyDualList<int> L3;
+        Cell<int>* c1 = L3.InsertToEnd(11);
+        Cell<int>* c2 = L3.InsertToEnd(22);
+        Cell<int>* c3 = L3.InsertToEnd(33);
 
         L3.InsertAfterAssigned(NewCell_7, c2);//insert after non-edge element
         L3.InsertAfterAssigned(NewCell_8, c3);//insert after last element
@@ -506,7 +497,7 @@ int dual_linked_main(void)
 
         std::cout << L3;
 
-        MyDualList EmptyList;
+        MyDualList<int> EmptyList;
 
         EmptyList.InsertAfterAssigned(NewCell_5, NewCell_1);
     }
@@ -516,7 +507,7 @@ int dual_linked_main(void)
 
     std::cout << "  insert before assigned position test" << std::endl;
     {
-        MyDualList L4;
+        MyDualList<int> L4;
 
         L4.InsertToEnd(NewCell_1);//4
         L4.InsertToEnd(NewCell_2);//7
@@ -542,7 +533,7 @@ int dual_linked_main(void)
     std::cout << "  DeleteFirst test" << std::endl;
 
     {
-        MyDualList L5;
+        MyDualList<int> L5;
 
 
         L5.DeleteFirst();//empty
@@ -578,7 +569,7 @@ int dual_linked_main(void)
     std::cout << "  DeleteLast test" << std::endl;
 
     {
-        MyDualList L6;
+        MyDualList<int> L6;
 
 
         std::cout << L6;
@@ -620,7 +611,7 @@ int dual_linked_main(void)
     std::cout << "  DeleteAssigned test" << std::endl;
 
     {
-        MyDualList L7;
+        MyDualList<int> L7;
 
 
         std::cout << L7;
@@ -686,7 +677,7 @@ int dual_linked_main(void)
     //////////////////////////////GetNext test///////////////////////////////////////
 
     {
-        MyDualList L7;
+        MyDualList<int> L7;
 
         L7.InsertToEnd(NewCell_1);//4
         L7.InsertToEnd(NewCell_2);//7
@@ -694,7 +685,7 @@ int dual_linked_main(void)
         L7.InsertToEnd(NewCell_4);//12
         L7.InsertToEnd(NewCell_5);//25
 
-        Cell* NextCell = new Cell;
+        Cell<int>* NextCell = new Cell<int>;
 
         NextCell = L7.GetNext(NewCell_3);
         //NextCell = L7.GetNext(nullptr);
@@ -708,19 +699,19 @@ int dual_linked_main(void)
             std::cout << "NexCell constains nullptr" << std::endl;
         }
 
-        MyDualList L8;
+        MyDualList<int> L8;
 
         //L8.InsertToEnd(NewCell_1);
 
-        Cell* rrrr;
+        Cell<int>* rrrr;
         rrrr = L8.GetNext(NewCell_1);
     }
 
     ///////////////////////////GetNext and Search test//////////////////////////////////////////
 
     {
-        MyDualList A;
-        MyDualList B;
+        MyDualList<int> A;
+        MyDualList<int> B;
 
         A.InsertToEnd(NewCell_1);
         A.InsertToEnd(NewCell_2);
@@ -728,12 +719,12 @@ int dual_linked_main(void)
         B.InsertToEnd(NewCell_3);
         B.InsertToEnd(NewCell_4);
 
-        Cell* ttt = A.Search(NewCell_1);//getting first element from list A
-        Cell* tttnnn = A.GetNext(ttt);//getting next element after assigned from list A
+        Cell<int>* ttt = A.Search(NewCell_1);//getting first element from list A
+        Cell<int>* tttnnn = A.GetNext(ttt);//getting next element after assigned from list A
 
         std::cout << "List A; Next element after " << ttt->val << " is " << tttnnn->val << std::endl;
 
-        Cell* qqq = B.GetNext(ttt);//getting next element after assigned but from list B
+        Cell<int>* qqq = B.GetNext(ttt);//getting next element after assigned but from list B
 
         if (qqq == nullptr)
         {
@@ -745,7 +736,7 @@ int dual_linked_main(void)
     //////////////////////////////GetPrev test//////////////////////////////////////////////
 
     {
-        MyDualList L7;
+        MyDualList<int> L7;
 
         L7.InsertToEnd(NewCell_1);//4
         L7.InsertToEnd(NewCell_2);//7
@@ -753,7 +744,7 @@ int dual_linked_main(void)
         //L7.InsertToEnd(NewCell_4);//12
         //L7.InsertToEnd(NewCell_5);//25
 
-        Cell* qwerty;
+        Cell<int>* qwerty;
 
         std::cout << std::endl << std::endl;
         std::cout << L7;
@@ -761,7 +752,7 @@ int dual_linked_main(void)
         qwerty = L7.GetPrev(NewCell_3);
         std::cout << "GetPrev: " << qwerty->val << std::endl;
 
-        MyDualList L9;
+        MyDualList<int> L9;
 
         qwerty = L9.GetPrev(NewCell_1);//zero
 
@@ -795,7 +786,7 @@ int dual_linked_main(void)
         std::cout << "  PopFront test" << std::endl;
 
 
-        MyDualList L9;
+        MyDualList<int> L9;
 
         L9.InsertToEnd(NewCell_1);
         L9.InsertToEnd(NewCell_2);
@@ -805,7 +796,7 @@ int dual_linked_main(void)
 
         std::cout << L9;
 
-        Cell* temp = nullptr;
+        Cell<int>* temp = nullptr;
         int i = 0;
         while (L9.GetFirst() != nullptr)
         {
@@ -823,7 +814,7 @@ int dual_linked_main(void)
     {
         std::cout << "  PopBack test" << std::endl;
 
-        MyDualList L9;
+        MyDualList<int> L9;
 
         L9.InsertToEnd(NewCell_1);
         L9.InsertToEnd(NewCell_2);
@@ -833,7 +824,7 @@ int dual_linked_main(void)
 
         std::cout << L9;
 
-        Cell* temp = nullptr;
+        Cell<int>* temp = nullptr;
         int i = 0;
         while (L9.GetLast() != nullptr)
         {
