@@ -1,5 +1,7 @@
 #include <iostream>
 
+int dual_linked_main(void);
+
 class Cell
 {
 public:
@@ -277,7 +279,6 @@ public:
         else//insert to non-empty list
         {
             Cell* current = header;
-            int i = 0;
             while (current->Next() != nullptr)
             {
                 if (current == assignedpos)//equal to inserting to begin
@@ -308,7 +309,6 @@ public:
 
                 }
 
-                i++;
                 current = current->Next();
             }
 
@@ -916,6 +916,8 @@ int main(void)
     std::cout << L9;
 
 
+
+    dual_linked_main();
 
     return 0;
 }
