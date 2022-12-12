@@ -3,8 +3,8 @@
 template <class Type>
 class Cell
 {
-public:
-    Type val = 0;
+public:   
+    Type val{};
 
     Cell* Next() const
     {
@@ -172,7 +172,7 @@ public:
         }
     }
 
-    CELLT* InsertToEnd(int value)
+    CELLT* InsertToEnd(Type value)
     {
         CELLT* temp = new CELLT;
         temp->val = value;
@@ -180,7 +180,7 @@ public:
         return temp;
     }
 
-    CELLT* InsertToBegin(int value)
+    CELLT* InsertToBegin(Type value)
     {
         CELLT* temp = new CELLT;
         temp->val = value;
@@ -780,7 +780,7 @@ int dual_linked_main(void)
     }
 
 
-    /////////////////////////////////////////////////////////////
+    ////////////////////////////PopFront test/////////////////////////////////
 
     {
         std::cout << "  PopFront test" << std::endl;
@@ -809,7 +809,7 @@ int dual_linked_main(void)
     }
 
 
-    ////////////////////////////////////////////////////////////////
+    /////////////////////////////PopBack test///////////////////////////////////
 
     {
         std::cout << "  PopBack test" << std::endl;
@@ -836,6 +836,59 @@ int dual_linked_main(void)
         std::cout << L9;
     }
 
+
+
+/////////////////////<double> PopFront test////////////////////////////////////////////
+
+    {
+        std::cout << "  <double> PopFront test" << std::endl;
+
+        MyDualList<double> LD1;
+
+        LD1.InsertToEnd(1.1);
+        LD1.InsertToEnd(2.2);
+        LD1.InsertToEnd(3.3);
+        LD1.InsertToEnd(4.4);
+        LD1.InsertToEnd(5.5);
+
+        Cell<double>* temp = nullptr;
+        int i = 0;
+        while (LD1.GetFirst() != nullptr)
+        {
+            temp = LD1.PopFront();
+            std::cout << "popfront: #" << i << " = " << temp->val << std::endl;
+            i++;
+        }
+
+        std::cout << LD1;
+    }
+    
+
+//////////////////////////////<string> PopBack test////////////////////////////////////////////////
+
+    {
+        std::cout << "  <string> PopBack test" << std::endl;
+
+        MyDualList<std::string> LS1;
+
+        LS1.InsertToEnd("aaa");
+        LS1.InsertToEnd("bbb");
+        LS1.InsertToEnd("ccc");
+        LS1.InsertToEnd("ddd");
+        LS1.InsertToEnd("eee");
+        LS1.InsertToEnd("fff");
+
+        Cell<std::string>* temp = nullptr;
+        int i = 0;
+        while (LS1.GetFirst() != nullptr)
+        {
+            temp = LS1.PopBack();
+            std::cout << "popback: #" << i << " = " << temp->val << std::endl;
+            i++;
+        }
+
+        std::cout << LS1;
+    }
 
 
 
